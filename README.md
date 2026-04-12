@@ -116,15 +116,15 @@ gradlew.bat test
 src/main/java/org/example/
 ├── App.java                              ← Main Program
 ├── DataValidationModule.java
-├── FinalScoreCalculationModule.java      (by Pebri)
-├── PassFailDeterminationModule.java      (by Pebri)
+├── FinalScoreCalculationModule.java      
+├── PassFailDeterminationModule.java      
 └── GradeDeterminationModule.java
 
 src/test/java/org/example/
 ├── AppTest.java
 ├── DataValidationModuleTest.java
-├── FinalScoreCalculationModuleTest.java  (by Pebri)
-├── PassFailDeterminationModuleTest.java  (by Pebri)
+├── FinalScoreCalculationModuleTest.java  
+├── PassFailDeterminationModuleTest.java  
 ├── GradeDeterminationModuleTest.java
 └── IntegrationTest.java
 ```
@@ -137,5 +137,3 @@ Program dibuat untuk praktikum Skema Pembelajaran Automation Testing dengan foku
 - Unit testing with JUnit 5
 - Modular & isolated module design
 
-**Dibuat oleh**: Azkia + Pebri  
-**Tanggal**: April 2026

@@ -1,0 +1,5 @@
+﻿# Force source files to use LF in the repo and normalize
+* text=auto
+*.java text eol=lf
+*.gradle text eol=lf
+*.properties text eol=lf

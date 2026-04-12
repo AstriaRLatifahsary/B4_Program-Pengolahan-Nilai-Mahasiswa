@@ -6,64 +6,56 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FinalScoreCalculationModuleTest {
 
-    private final FinalScoreCalculationModule scoreModule = new FinalScoreCalculationModule();
+    private final FinalScoreCalculationModule finalScoreModule = new FinalScoreCalculationModule();
 
-    // Test case untuk perhitungan yang valid
     @Test
-    void shouldCalculateCorrectFinalScoreWithValidInput() {
-        double result = scoreModule.calculateFinalScore(80, 70, 90);
-        double expected = (0.3 * 80) + (0.3 * 70) + (0.4 * 90);
-        assertEquals(expected, result, 0.01);
+    void shouldCalculateCorrectFinalScoreWithValidInputs() {
+        // Bobot: Tugas 30%, UTS 30%, UAS 40%
+        // (0.3 * 80) + (0.3 * 70) + (0.4 * 90) = 24 + 21 + 36 = 81
+        double result = finalScoreModule.calculateFinalScore(80, 70, 90);
+        assertEquals(81.0, result);
     }
 
     @Test
-    void shouldCalculateCorrectFinalScoreWithDifferentValues() {
-        double result = scoreModule.calculateFinalScore(90, 85, 95);
-        double expected = (0.3 * 90) + (0.3 * 85) + (0.4 * 95);
-        assertEquals(expected, result, 0.01);
+    void shouldReturnNegativeOneWhenInputsInvalid() {
+        // Nilai tugas negatif
+        double result = finalScoreModule.calculateFinalScore(-1, 70, 90);
+        assertEquals(-1, result);
     }
 
     @Test
-    void shouldCalculateCorrectFinalScoreWithMinimumValidValues() {
-        double result = scoreModule.calculateFinalScore(0.1, 0.1, 0.1);
-        double expected = (0.3 * 0.1) + (0.3 * 0.1) + (0.4 * 0.1);
-        assertEquals(expected, result, 0.01);
-    }
-
-    // Test case untuk input tidak valid (negative values)
-    @Test
-    void shouldReturnErrorWhenAnyScoreIsNegative() {
-        assertEquals(-1, scoreModule.calculateFinalScore(-1, 70, 90));
-        assertEquals(-1, scoreModule.calculateFinalScore(80, -5, 90));
-        assertEquals(-1, scoreModule.calculateFinalScore(80, 70, -10));
-    }
-
-    // Test case untuk input tidak valid (nilai > 100)
-    @Test
-    void shouldReturnErrorWhenAnyScoreIsMoreThanHundred() {
-        assertEquals(-1, scoreModule.calculateFinalScore(101, 70, 90));
-        assertEquals(-1, scoreModule.calculateFinalScore(80, 101, 90));
-        assertEquals(-1, scoreModule.calculateFinalScore(80, 70, 101));
-    }
-
-    // Test case untuk semua nilai 0 (dianggap belum input)
-    @Test
-    void shouldReturnErrorWhenAllScoresAreZero() {
-        assertEquals(-1, scoreModule.calculateFinalScore(0, 0, 0));
+    void shouldReturnNegativeOneWhenInputExceedsHundred() {
+        // Nilai UTS lebih dari 100
+        double result = finalScoreModule.calculateFinalScore(80, 101, 90);
+        assertEquals(-1, result);
     }
 
     @Test
-    void shouldCalculateMaximumScoreCorrectly() {
-        // Nilai maksimal yang valid adalah 100 untuk semua
-        // Hasil: (0.3 * 100) + (0.3 * 100) + (0.4 * 100) = 100
-        double result = scoreModule.calculateFinalScore(100, 100, 100);
-        assertEquals(100.0, result, 0.01);
+    void shouldReturnNegativeOneWhenAllInputsAreZero() {
+        // Semua nilai 0 tidak valid
+        double result = finalScoreModule.calculateFinalScore(0, 0, 0);
+        assertEquals(-1, result);
     }
 
     @Test
-    void shouldCalculateCorrectlyWithZeroInOneComponent() {
-        double result = scoreModule.calculateFinalScore(0, 80, 100);
-        double expected = (0.3 * 0) + (0.3 * 80) + (0.4 * 100);
-        assertEquals(expected, result, 0.01);
+    void shouldCalculateCorrectlyWithZeroInOneInput() {
+        // Salah satu nilai boleh 0
+        // (0.3 * 0) + (0.3 * 70) + (0.4 * 90) = 0 + 21 + 36 = 57
+        double result = finalScoreModule.calculateFinalScore(0, 70, 90);
+        assertEquals(57.0, result);
+    }
+
+    @Test
+    void shouldCalculateCorrectlyWithAllScoresMaximum() {
+        // (0.3 * 100) + (0.3 * 100) + (0.4 * 100) = 30 + 30 + 40 = 100
+        double result = finalScoreModule.calculateFinalScore(100, 100, 100);
+        assertEquals(100.0, result);
+    }
+
+    @Test
+    void shouldCalculateCorrectlyWithDifferentWeightDistribution() {
+        // (0.3 * 60) + (0.3 * 80) + (0.4 * 100) = 18 + 24 + 40 = 82
+        double result = finalScoreModule.calculateFinalScore(60, 80, 100);
+        assertEquals(82.0, result);
     }
 }

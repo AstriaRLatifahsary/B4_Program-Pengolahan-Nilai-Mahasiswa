@@ -1,8 +1,13 @@
 package org.example;
 
-public class GradeDeterminationModule {
+public class GradeDeterminationModule extends ScoreDecisionModule {
 
     public String determineGrade(double nilaiAkhir) {
+        return determine(nilaiAkhir);
+    }
+
+    @Override
+    public String determine(double nilaiAkhir) {
         if (nilaiAkhir >= 85) {
             return "A";
         }

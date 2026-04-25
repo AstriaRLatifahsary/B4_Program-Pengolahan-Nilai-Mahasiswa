@@ -62,20 +62,19 @@ public class App {
         System.out.println("          INPUT NILAI MAHASISWA");
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 
-        double nilaiTugas = 0;
-        double nilaiUts = 0;
-        double nilaiUas = 0;
+        Mahasiswa mahasiswa = new Mahasiswa("-", "Mahasiswa");
         boolean isValidInput = false;
 
         // Loop untuk input hingga valid
         while (!isValidInput) {
             try {
-                nilaiTugas = getInputValue("Nilai Tugas (0-100)");
-                nilaiUts = getInputValue("Nilai UTS (0-100)");
-                nilaiUas = getInputValue("Nilai UAS (0-100)");
+                double nilaiTugas = getInputValue("Nilai Tugas (0-100)");
+                double nilaiUts = getInputValue("Nilai UTS (0-100)");
+                double nilaiUas = getInputValue("Nilai UAS (0-100)");
+                mahasiswa.setNilai(nilaiTugas, nilaiUts, nilaiUas);
 
                 // Validasi input
-                if (!validator.isValid(nilaiTugas, nilaiUts, nilaiUas)) {
+                if (!mahasiswa.isNilaiValid(validator)) {
                     System.out.println("✗ Input tidak valid!");
                     System.out.println("  - Semua nilai harus antara 0-100");
                     System.out.println("  - Tidak boleh semua nilai 0 (belum input)\n");
@@ -90,7 +89,7 @@ public class App {
         }
 
         // Hitung nilai akhir
-        double nilaiAkhir = scoreCalculator.calculateFinalScore(nilaiTugas, nilaiUts, nilaiUas);
+        double nilaiAkhir = mahasiswa.hitungNilaiAkhir(scoreCalculator);
 
         if (nilaiAkhir == -1) {
             System.out.println("✗ Terjadi kesalahan dalam perhitungan nilai akhir");
@@ -98,13 +97,20 @@ public class App {
         }
 
         // Tentukan grade
-        String grade = gradeModule.determineGrade(nilaiAkhir);
+        String grade = mahasiswa.tentukanGrade(gradeModule, nilaiAkhir);
 
         // Tentukan status kelulusan
-        String statusKelulusan = passFailModule.determinePassStatus(nilaiAkhir);
+        String statusKelulusan = mahasiswa.tentukanStatusKelulusan(passFailModule, nilaiAkhir);
 
         // Tampilkan hasil
-        displayResults(nilaiTugas, nilaiUts, nilaiUas, nilaiAkhir, grade, statusKelulusan);
+        displayResults(
+            mahasiswa.getNilaiTugas(),
+            mahasiswa.getNilaiUts(),
+            mahasiswa.getNilaiUas(),
+            nilaiAkhir,
+            grade,
+            statusKelulusan
+        );
     }
 
     private static double getInputValue(String prompt) throws NumberFormatException {

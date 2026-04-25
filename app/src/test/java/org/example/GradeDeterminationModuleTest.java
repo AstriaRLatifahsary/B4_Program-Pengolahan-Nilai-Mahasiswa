@@ -1,55 +1,145 @@
 package org.example;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GradeDeterminationModuleTest {
 
-    private final GradeDeterminationModule gradeModule = new GradeDeterminationModule();
+    private GradeDeterminationModule gradeModule;
 
-    @Test
-    void shouldReturnAForScoreAtLeastEightyFive() {
-        System.out.println("\nTC1: P1 - Grade A (nilai >= 85)");
-        assertEquals("A", gradeModule.determineGrade(85));
-        System.out.println("  Input: 85 -> Result: A");
-        assertEquals("A", gradeModule.determineGrade(100));
-        System.out.println("  Input: 100 -> Result: A");
+    @BeforeEach
+    void setUp() {
+        gradeModule = new GradeDeterminationModule();
     }
 
     @Test
-    void shouldReturnBForScoreBetweenSeventyAndEightyFour() {
-        System.out.println("\nTC2: P1 - Grade B (70 <= nilai <= 84)");
-        assertEquals("B", gradeModule.determineGrade(70));
-        System.out.println("  Input: 70 -> Result: B");
-        assertEquals("B", gradeModule.determineGrade(84));
-        System.out.println("  Input: 84 -> Result: B");
+    void TC1_P1_BatasBawahGradeA() {
+        System.out.println("\nTC1: P1 - Menguji batas bawah Grade A (>=85)");
+        // (1) setup (arrange, build)
+        double nilaiAkhir = 85;
+
+        // (2) exercise (act, operate)
+        String actual = gradeModule.determineGrade(nilaiAkhir);
+
+        // (3) verify (assert, check)
+        assertEquals("A", actual);
     }
 
     @Test
-    void shouldReturnCForScoreBetweenSixtyAndSixtyNine() {
-        System.out.println("\nTC3: P1 - Grade C (60 <= nilai <= 69)");
-        assertEquals("C", gradeModule.determineGrade(60));
-        System.out.println("  Input: 60 -> Result: C");
-        assertEquals("C", gradeModule.determineGrade(69));
-        System.out.println("  Input: 69 -> Result: C");
+    void TC2_P1_BatasAtasGradeA() {
+        System.out.println("\nTC2: P1 - Menguji batas atas Grade A");
+        // (1) setup (arrange, build)
+        double nilaiAkhir = 100;
+
+        // (2) exercise (act, operate)
+        String actual = gradeModule.determineGrade(nilaiAkhir);
+
+        // (3) verify (assert, check)
+        assertEquals("A", actual);
     }
 
     @Test
-    void shouldReturnDForScoreBetweenFiftyAndFiftyNine() {
-        System.out.println("\nTC4: P1 - Grade D (50 <= nilai <= 59)");
-        assertEquals("D", gradeModule.determineGrade(50));
-        System.out.println("  Input: 50 -> Result: D");
-        assertEquals("D", gradeModule.determineGrade(59));
-        System.out.println("  Input: 59 -> Result: D");
+    void TC3_P2_BatasBawahGradeB() {
+        System.out.println("\nTC3: P2 - Menguji batas bawah Grade B");
+        // (1) setup (arrange, build)
+        double nilaiAkhir = 70;
+
+        // (2) exercise (act, operate)
+        String actual = gradeModule.determineGrade(nilaiAkhir);
+
+        // (3) verify (assert, check)
+        assertEquals("B", actual);
     }
 
     @Test
-    void shouldReturnEForScoreBelowFifty() {
-        System.out.println("\nTC5: P1 - Grade E (nilai < 50)");
-        assertEquals("E", gradeModule.determineGrade(49));
-        System.out.println("  Input: 49 -> Result: E");
-        assertEquals("E", gradeModule.determineGrade(0));
-        System.out.println("  Input: 0 -> Result: E");
+    void TC4_P2_BatasAtasGradeB() {
+        System.out.println("\nTC4: P2 - Menguji batas atas Grade B");
+        // (1) setup (arrange, build)
+        double nilaiAkhir = 84;
+
+        // (2) exercise (act, operate)
+        String actual = gradeModule.determineGrade(nilaiAkhir);
+
+        // (3) verify (assert, check)
+        assertEquals("B", actual);
+    }
+
+    @Test
+    void TC5_P3_BatasBawahGradeC() {
+        System.out.println("\nTC5: P3 - Menguji batas bawah Grade C");
+        // (1) setup (arrange, build)
+        double nilaiAkhir = 60;
+
+        // (2) exercise (act, operate)
+        String actual = gradeModule.determineGrade(nilaiAkhir);
+
+        // (3) verify (assert, check)
+        assertEquals("C", actual);
+    }
+
+    @Test
+    void TC6_P3_BatasAtasGradeC() {
+        System.out.println("\nTC6: P3 - Menguji batas atas Grade C");
+        // (1) setup (arrange, build)
+        double nilaiAkhir = 69;
+
+        // (2) exercise (act, operate)
+        String actual = gradeModule.determineGrade(nilaiAkhir);
+
+        // (3) verify (assert, check)
+        assertEquals("C", actual);
+    }
+
+    @Test
+    void TC7_P4_BatasBawahGradeD() {
+        System.out.println("\nTC7: P4 - Menguji batas bawah Grade D");
+        // (1) setup (arrange, build)
+        double nilaiAkhir = 50;
+
+        // (2) exercise (act, operate)
+        String actual = gradeModule.determineGrade(nilaiAkhir);
+
+        // (3) verify (assert, check)
+        assertEquals("D", actual);
+    }
+
+    @Test
+    void TC8_P4_BatasAtasGradeD() {
+        System.out.println("\nTC8: P4 - Menguji batas atas Grade D");
+        // (1) setup (arrange, build)
+        double nilaiAkhir = 59;
+
+        // (2) exercise (act, operate)
+        String actual = gradeModule.determineGrade(nilaiAkhir);
+
+        // (3) verify (assert, check)
+        assertEquals("D", actual);
+    }
+
+    @Test
+    void TC9_P5_NilaiDibawah50() {
+        System.out.println("\nTC9: P5 - Menguji nilai di bawah 50");
+        // (1) setup (arrange, build)
+        double nilaiAkhir = 49;
+
+        // (2) exercise (act, operate)
+        String actual = gradeModule.determineGrade(nilaiAkhir);
+
+        // (3) verify (assert, check)
+        assertEquals("E", actual);
+    }
+
+    @Test
+    void TC10_P5_NilaiMinimum() {
+        System.out.println("\nTC10: P5 - Menguji nilai minimum");
+        // (1) setup (arrange, build)
+        double nilaiAkhir = 0;
+
+        // (2) exercise (act, operate)
+        String actual = gradeModule.determineGrade(nilaiAkhir);
+
+        // (3) verify (assert, check)
+        assertEquals("E", actual);
     }
 }

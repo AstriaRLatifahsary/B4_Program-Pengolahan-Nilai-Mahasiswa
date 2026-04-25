@@ -1,6 +1,6 @@
 package org.example;
 
-public class PassFailDeterminationModule {
+public class PassFailDeterminationModule extends ScoreDecisionModule {
 
     /**
      * Menentukan status kelulusan berdasarkan nilai akhir.
@@ -10,6 +10,11 @@ public class PassFailDeterminationModule {
      * @return "Lulus" jika nilai >= 60, "Tidak Lulus" jika nilai < 60
      */
     public String determinePassStatus(double nilaiAkhir) {
+        return determine(nilaiAkhir);
+    }
+
+    @Override
+    public String determine(double nilaiAkhir) {
         if (nilaiAkhir >= 60) {
             return "Lulus";
         }

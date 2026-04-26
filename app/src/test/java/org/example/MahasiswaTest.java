@@ -31,15 +31,16 @@ class MahasiswaTest {
         assertEquals(90.0, mahasiswa.getNilaiUas());
     }
 
+   @Test
+    void TC3_NilaiValid() {
+        mahasiswa.setNilai(70,80,90);
+        assertTrue(mahasiswa.isNilaiValid(new DataValidationModule()));
+    }
+
     @Test
-    void isNilaiValidShouldDelegateToValidationModule() {
-        DataValidationModule validator = new DataValidationModule();
-
-        mahasiswa.setNilai(70.0, 80.0, 90.0);
-        assertTrue(mahasiswa.isNilaiValid(validator));
-
-        mahasiswa.setNilai(0.0, 0.0, 0.0);
-        assertFalse(mahasiswa.isNilaiValid(validator));
+    void TC4_NilaiTidakValid() {
+        mahasiswa.setNilai(0,0,0);
+        assertFalse(mahasiswa.isNilaiValid(new DataValidationModule()));
     }
 
     @Test

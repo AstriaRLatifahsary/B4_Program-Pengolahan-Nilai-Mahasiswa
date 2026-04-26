@@ -7,131 +7,95 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FinalScoreCalculationModuleTest {
 
-    private FinalScoreCalculationModule finalScoreModule;
+    private FinalScoreCalculationModule module;
 
     @BeforeEach
     void setUp() {
-        finalScoreModule = new FinalScoreCalculationModule();
+        module = new FinalScoreCalculationModule();
+    }
+
+    // ======================
+    // P1 - VALIDATION ERROR
+    // ======================
+
+    @Test
+    void shouldReturnNegativeOneWhenNilaiTugasNegative() {
+        double result = module.calculateFinalScore(-1.0, 70.0, 80.0);
+        System.out.println("\nTC1\nExpected: -1.0, Result: " + result);
+        assertEquals(-1.0, result);
     }
 
     @Test
-    void shouldCalculateCorrectFinalScoreWithValidInputs() {
-        // Bobot: Tugas 30%, UTS 30%, UAS 40%
-        // (0.3 * 80) + (0.3 * 70) + (0.4 * 90) = 24 + 21 + 36 = 81
-        // (1) setup (arrange, build)
-        double nilaiTugas = 80;
-        double nilaiUts = 70;
-        double nilaiUas = 90;
+    void shouldReturnNegativeOneWhenNilaiUtsNegative() {
+        double result = module.calculateFinalScore(80.0, -5.0, 90.0);
+        System.out.println("\nTC2\nExpected: -1.0, Result: " + result);
+        assertEquals(-1.0, result);
+    }
 
-        // (2) exercise (act, operate)
-        System.out.println("\nTC1: P1 - Kalkulasi nilaiAkhir dengan nilai normal (tugas=80, uts=70, uas=90)");
-        double result = finalScoreModule.calculateFinalScore(nilaiTugas, nilaiUts, nilaiUas);
+    @Test
+    void shouldReturnNegativeOneWhenNilaiUasNegative() {
+        double result = module.calculateFinalScore(75.0, 85.0, -10.0);
+        System.out.println("\nTC3\nExpected: -1.0, Result: " + result);
+        assertEquals(-1.0, result);
+    }
 
-        // (3) verify (assert, check)
-        System.out.println("Expected: 81.0, Result: " + result);
+    @Test
+    void shouldReturnNegativeOneWhenAllInputsZero() {
+        double result = module.calculateFinalScore(0.0, 0.0, 0.0);
+        System.out.println("\nTC4\nExpected: -1.0, Result: " + result);
+        assertEquals(-1.0, result);
+    }
+
+    @Test
+    void shouldReturnNegativeOneWhenNilaiUasExceedsMax_case1() {
+        double result = module.calculateFinalScore(100.0, 100.0, 101.0);
+        System.out.println("\nTC5\nExpected: -1.0, Result: " + result);
+        assertEquals(-1.0, result);
+    }
+
+    @Test
+    void shouldReturnNegativeOneWhenNilaiUasExceedsMax_case2() {
+        double result = module.calculateFinalScore(99.0, 99.0, 101.5);
+        System.out.println("\nTC6\nExpected: -1.0, Result: " + result);
+        assertEquals(-1.0, result);
+    }
+
+    @Test
+    void shouldReturnNegativeOneWhenNilaiUtsExceedsMax() {
+        double result = module.calculateFinalScore(80.0, 105.0, 90.0);
+        System.out.println("\nTC7\nExpected: -1.0, Result: " + result);
+        assertEquals(-1.0, result);
+    }
+
+    // ======================
+    // P3 - VALID CALCULATION
+    // ======================
+
+    @Test
+    void shouldReturnCorrectFinalScore_case1() {
+        double result = module.calculateFinalScore(70.0, 80.0, 90.0);
+        System.out.println("\nTC8\nExpected: 81.0, Result: " + result);
         assertEquals(81.0, result);
     }
 
     @Test
-    void shouldReturnNegativeOneWhenInputsInvalid() {
-        // Nilai tugas negatif
-        // (1) setup (arrange, build)
-        double nilaiTugas = -1;
-        double nilaiUts = 70;
-        double nilaiUas = 90;
-
-        // (2) exercise (act, operate)
-        System.out.println("\nTC2: P1 - Input tidak valid (tugas=-1, uts=70, uas=90)");
-        double result = finalScoreModule.calculateFinalScore(nilaiTugas, nilaiUts, nilaiUas);
-
-        // (3) verify (assert, check)
-        System.out.println("Expected: -1, Result: " + result);
-        assertEquals(-1, result);
+    void shouldReturnCorrectFinalScore_case2() {
+        double result = module.calculateFinalScore(50.0, 60.0, 70.0);
+        System.out.println("\nTC9\nExpected: 61.0, Result: " + result);
+        assertEquals(61.0, result);
     }
 
     @Test
-    void shouldReturnNegativeOneWhenInputExceedsHundred() {
-        // Nilai UTS lebih dari 100
-        // (1) setup (arrange, build)
-        double nilaiTugas = 80;
-        double nilaiUts = 101;
-        double nilaiUas = 90;
-
-        // (2) exercise (act, operate)
-        System.out.println("\nTC3: P1 - Input melebihi 100 (tugas=80, uts=101, uas=90)");
-        double result = finalScoreModule.calculateFinalScore(nilaiTugas, nilaiUts, nilaiUas);
-
-        // (3) verify (assert, check)
-        System.out.println("Expected: -1, Result: " + result);
-        assertEquals(-1, result);
+    void shouldReturnCorrectFinalScore_case3() {
+        double result = module.calculateFinalScore(85.0, 90.0, 95.0);
+        System.out.println("\nTC10\nExpected: 90.5, Result: " + result);
+        assertEquals(90.5, result);
     }
 
     @Test
-    void shouldReturnNegativeOneWhenAllInputsAreZero() {
-        // Semua nilai 0 tidak valid
-        // (1) setup (arrange, build)
-        double nilaiTugas = 0;
-        double nilaiUts = 0;
-        double nilaiUas = 0;
-
-        // (2) exercise (act, operate)
-        System.out.println("\nTC4: P1 - Semua nilai 0 (tugas=0, uts=0, uas=0)");
-        double result = finalScoreModule.calculateFinalScore(nilaiTugas, nilaiUts, nilaiUas);
-
-        // (3) verify (assert, check)
-        System.out.println("Expected: -1, Result: " + result);
-        assertEquals(-1, result);
-    }
-
-    @Test
-    void shouldCalculateCorrectlyWithZeroInOneInput() {
-        // Salah satu nilai boleh 0
-        // (0.3 * 0) + (0.3 * 70) + (0.4 * 90) = 0 + 21 + 36 = 57
-        // (1) setup (arrange, build)
-        double nilaiTugas = 0;
-        double nilaiUts = 70;
-        double nilaiUas = 90;
-
-        // (2) exercise (act, operate)
-        System.out.println("\nTC5: P1 - Salah satu nilai 0 (tugas=0, uts=70, uas=90)");
-        double result = finalScoreModule.calculateFinalScore(nilaiTugas, nilaiUts, nilaiUas);
-
-        // (3) verify (assert, check)
-        System.out.println("Expected: 57.0, Result: " + result);
-        assertEquals(57.0, result);
-    }
-
-    @Test
-    void shouldCalculateCorrectlyWithAllScoresMaximum() {
-        // (0.3 * 100) + (0.3 * 100) + (0.4 * 100) = 30 + 30 + 40 = 100
-        // (1) setup (arrange, build)
-        double nilaiTugas = 100;
-        double nilaiUts = 100;
-        double nilaiUas = 100;
-
-        // (2) exercise (act, operate)
-        System.out.println("\nTC6: P1 - Semua nilai maksimal (tugas=100, uts=100, uas=100)");
-        double result = finalScoreModule.calculateFinalScore(nilaiTugas, nilaiUts, nilaiUas);
-
-        // (3) verify (assert, check)
-        System.out.println("Expected: 100.0, Result: " + result);
+    void shouldReturnCorrectFinalScore_boundaryMax() {
+        double result = module.calculateFinalScore(100.0, 100.0, 100.0);
+        System.out.println("\nTC11\nExpected: 100.0, Result: " + result);
         assertEquals(100.0, result);
-    }
-
-    @Test
-    void shouldCalculateCorrectlyWithDifferentWeightDistribution() {
-        // (0.3 * 60) + (0.3 * 80) + (0.4 * 100) = 18 + 24 + 40 = 82
-        // (1) setup (arrange, build)
-        double nilaiTugas = 60;
-        double nilaiUts = 80;
-        double nilaiUas = 100;
-
-        // (2) exercise (act, operate)
-        System.out.println("\nTC7: P1 - Nilai desimal (tugas=60, uts=80, uas=100)");
-        double result = finalScoreModule.calculateFinalScore(nilaiTugas, nilaiUts, nilaiUas);
-
-        // (3) verify (assert, check)
-        System.out.println("Expected: 82.0, Result: " + result);
-        assertEquals(82.0, result);
     }
 }

@@ -7,80 +7,60 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PassFailDeterminationModuleTest {
 
-    private PassFailDeterminationModule passFailModule;
+    private PassFailDeterminationModule module;
 
     @BeforeEach
     void setUp() {
-        passFailModule = new PassFailDeterminationModule();
+        module = new PassFailDeterminationModule();
+    }
+
+    // =====================
+    // P1 - TRUE BRANCH (LULUS)
+    // =====================
+
+    @Test
+    void shouldReturnLulus_case1() {
+        String result = module.determinePassStatus(85.0);
+        System.out.println("\nTC1\nExpected: Lulus, Result: " + result);
+        assertEquals("Lulus", result);
     }
 
     @Test
-    void shouldReturnLulusWhenScoreIsGreaterThanOrEqualToSixty() {
-        System.out.println("\nTC1: P1 - Status Lulus (nilai >= 60)");
-        // (1) setup (arrange, build)
-        double nilai1 = 60;
-        double nilai2 = 70;
-        double nilai3 = 85;
-        double nilai4 = 100;
-
-        // (2) exercise (act, operate)
-        String actual1 = passFailModule.determinePassStatus(nilai1);
-        String actual2 = passFailModule.determinePassStatus(nilai2);
-        String actual3 = passFailModule.determinePassStatus(nilai3);
-        String actual4 = passFailModule.determinePassStatus(nilai4);
-
-        // (3) verify (assert, check)
-        assertEquals("Lulus", actual1);
-        System.out.println("  Input: 60 -> Result: Lulus");
-        assertEquals("Lulus", actual2);
-        System.out.println("  Input: 70 -> Result: Lulus");
-        assertEquals("Lulus", actual3);
-        System.out.println("  Input: 85 -> Result: Lulus");
-        assertEquals("Lulus", actual4);
-        System.out.println("  Input: 100 -> Result: Lulus");
+    void shouldReturnLulus_case2_boundary() {
+        String result = module.determinePassStatus(60.0);
+        System.out.println("\nTC2\nExpected: Lulus, Result: " + result);
+        assertEquals("Lulus", result);
     }
 
     @Test
-    void shouldReturnTidakLulusWhenScoreLessThanSixty() {
-        System.out.println("\nTC2: P1 - Status Tidak Lulus (nilai < 60)");
-        // (1) setup (arrange, build)
-        double nilai1 = 59;
-        double nilai2 = 50;
-        double nilai3 = 0;
+    void shouldReturnLulus_case3_max() {
+        String result = module.determinePassStatus(100.0);
+        System.out.println("\nTC3\nExpected: Lulus, Result: " + result);
+        assertEquals("Lulus", result);
+    }
 
-        // (2) exercise (act, operate)
-        String actual1 = passFailModule.determinePassStatus(nilai1);
-        String actual2 = passFailModule.determinePassStatus(nilai2);
-        String actual3 = passFailModule.determinePassStatus(nilai3);
+    // =====================
+    // P2 - FALSE BRANCH (TIDAK LULUS)
+    // =====================
 
-        // (3) verify (assert, check)
-        assertEquals("Tidak Lulus", actual1);
-        System.out.println("  Input: 59 -> Result: Tidak Lulus");
-        assertEquals("Tidak Lulus", actual2);
-        System.out.println("  Input: 50 -> Result: Tidak Lulus");
-        assertEquals("Tidak Lulus", actual3);
-        System.out.println("  Input: 0 -> Result: Tidak Lulus");
+    @Test
+    void shouldReturnTidakLulus_case1() {
+        String result = module.determinePassStatus(55.0);
+        System.out.println("\nTC4\nExpected: Tidak Lulus, Result: " + result);
+        assertEquals("Tidak Lulus", result);
     }
 
     @Test
-    void shouldReturnTidakLulusWhenScoreIsNearBoundary() {
-        System.out.println("\nTC3: P1 - Boundary Testing (nilai sekitar 60)");
-        // (1) setup (arrange, build)
-        double nilai1 = 59.9;
-        double nilai2 = 60.0;
-        double nilai3 = 60.1;
+    void shouldReturnTidakLulus_case2_boundary() {
+        String result = module.determinePassStatus(59.9);
+        System.out.println("\nTC5\nExpected: Tidak Lulus, Result: " + result);
+        assertEquals("Tidak Lulus", result);
+    }
 
-        // (2) exercise (act, operate)
-        String actual1 = passFailModule.determinePassStatus(nilai1);
-        String actual2 = passFailModule.determinePassStatus(nilai2);
-        String actual3 = passFailModule.determinePassStatus(nilai3);
-
-        // (3) verify (assert, check)
-        assertEquals("Tidak Lulus", actual1);
-        System.out.println("  Input: 59.9 -> Result: Tidak Lulus");
-        assertEquals("Lulus", actual2);
-        System.out.println("  Input: 60.0 -> Result: Lulus");
-        assertEquals("Lulus", actual3);
-        System.out.println("  Input: 60.1 -> Result: Lulus");
+    @Test
+    void shouldReturnTidakLulus_case3_zero() {
+        String result = module.determinePassStatus(0.0);
+        System.out.println("\nTC6\nExpected: Tidak Lulus, Result: " + result);
+        assertEquals("Tidak Lulus", result);
     }
 }

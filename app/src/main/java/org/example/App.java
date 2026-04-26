@@ -11,11 +11,15 @@ public class App {
     private static final FinalScoreCalculationModule scoreCalculator = new FinalScoreCalculationModule();
     private static final GradeDeterminationModule gradeModule = new GradeDeterminationModule();
     private static final PassFailDeterminationModule passFailModule = new PassFailDeterminationModule();
-    private static final Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
+
+    static void setScannerForTesting(Scanner testScanner) {
+        scanner = testScanner;
+    }
 
     public static void main(String[] args) {
         System.out.println("╔════════════════════════════════════════════════════╗");
-        System.out.println("║     SISTEM PENGOLAHAN NILAI MAHASISWA             ║");
+        System.out.println("║          SISTEM PENGOLAHAN NILAI MAHASISWA         ║");
         System.out.println("╚════════════════════════════════════════════════════╝\n");
 
         boolean isRunning = true;
@@ -40,12 +44,12 @@ public class App {
     }
 
     private static void displayMenu() {
-        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("\n═══════════════════════════════════════");
         System.out.println("           MENU UTAMA");
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("═══════════════════════════════════════");
         System.out.println("1. Proses Nilai Mahasiswa");
         System.out.println("2. Keluar");
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("═══════════════════════════════════════");
         System.out.print("Pilihan Anda (1-2): ");
     }
 
@@ -58,9 +62,9 @@ public class App {
     }
 
     private static void processStudentGrades() {
-        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("\n═══════════════════════════════════════");
         System.out.println("          INPUT NILAI MAHASISWA");
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("═══════════════════════════════════════");
 
         Mahasiswa mahasiswa = new Mahasiswa("-", "Mahasiswa");
         boolean isValidInput = false;
@@ -120,9 +124,9 @@ public class App {
 
     private static void displayResults(double nilaiTugas, double nilaiUts, double nilaiUas,
                                       double nilaiAkhir, String grade, String statusKelulusan) {
-        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("\n═══════════════════════════════════════");
         System.out.println("          HASIL PENGOLAHAN NILAI");
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("═══════════════════════════════════════");
         System.out.printf("  Nilai Tugas       : %.2f (Bobot: 30%%)%n", nilaiTugas);
         System.out.printf("  Nilai UTS         : %.2f (Bobot: 30%%)%n", nilaiUts);
         System.out.printf("  Nilai UAS         : %.2f (Bobot: 40%%)%n", nilaiUas);
@@ -130,7 +134,7 @@ public class App {
         System.out.printf("  Nilai Akhir       : %.2f%n", nilaiAkhir);
         System.out.printf("  Grade             : %s%n", grade);
         System.out.printf("  Status Kelulusan  : %s%n", statusKelulusan);
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+        System.out.println("═══════════════════════════════════════\n");
     }
 
     public String getGreeting() {
